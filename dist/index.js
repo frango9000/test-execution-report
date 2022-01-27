@@ -1936,13 +1936,13 @@ async function postPullRequestComment(octokit, name, message) {
             core.debug(`No previous comments found, creating a new one...`);
             response = await octokit.issues.createComment({
                 ...github.context.repo,
-                issue_number: octokit.payload.pull_request.number,
+                issue_number: github.context.payload.pull_request.number,
                 body: getHeader() + message + getFooter()
             });
         }
         else {
             core.debug(`Previous comment found, updating...`);
-            response = await octokit.rest.issues.updateComment({
+            response = await octokit.issues.updateComment({
                 ...github.context.repo,
                 comment_id: previousComments[0].id,
                 body: getHeader() + message + getFooter()
@@ -1953,7 +1953,7 @@ async function postPullRequestComment(octokit, name, message) {
             if (surplusComments.length)
                 core.debug(`Removing surplus comments. (${surplusComments.length}`);
             for (const comment of surplusComments) {
-                await octokit.rest.issues.deleteComment({
+                await octokit.issues.deleteComment({
                     ...github.context.repo,
                     comment_id: comment.id
                 });
@@ -1961,7 +1961,6 @@ async function postPullRequestComment(octokit, name, message) {
         }
         if (response) {
             core.debug(`Post message status: ${response.status}`);
-            core.debug(`Issue URL: ${response.data.issue_url}`);
             core.debug(`Comment URL: ${response.data.url}`);
             core.debug(`Comment HTML: ${response.data.html_url}`);
         }
