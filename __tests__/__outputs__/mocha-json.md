@@ -3,14 +3,22 @@
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |6|1✔️|4❌️|1✖️|12ms|
+
 <details><summary>Open Suits Details</summary>
 <p>
+
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[test/main.test.js](#r0s0)|1✔️|3❌️||1ms|
-|[test/second.test.js](#r0s1)||1❌️|1✖️|8ms|</p></details>
+|[test/main.test.js](#r0s0)|1✔️|3❌️|-|1ms|
+|[test/second.test.js](#r0s1)|-|1❌️|1✖️|8ms|
+
+</p>
+</details>
+
+
 <details><summary>Open Tests Detail</summary>
 <p>
+
 #### ❌️ <a id='user-content-r0s0' href='#r0s0'>test/main.test.js</a>
 ```
 Test 1
@@ -32,4 +40,7 @@ Test 2
 ✖️ Skipped test
 ❌️ Timeout test
 	Timeout of 1ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (C:\Users\Michal\Workspace\dorny\test-reporter\reports\mocha\test\second.test.js)
-```</p></details>
+```
+
+</p>
+</details>

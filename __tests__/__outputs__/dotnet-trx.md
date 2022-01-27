@@ -3,13 +3,21 @@
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |11|5✔️|5❌️|1✖️|1s|
+
 <details><summary>Open Suits Details</summary>
 <p>
+
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[DotnetTests.XUnitTests.CalculatorTests](#r0s0)|5✔️|5❌️|1✖️|118ms|</p></details>
+|[DotnetTests.XUnitTests.CalculatorTests](#r0s0)|5✔️|5❌️|1✖️|118ms|
+
+</p>
+</details>
+
+
 <details><summary>Open Tests Detail</summary>
 <p>
+
 #### ❌️ <a id='user-content-r0s0' href='#r0s0'>DotnetTests.XUnitTests.CalculatorTests</a>
 ```
 ✔️ Custom Name
@@ -34,4 +42,7 @@
 	Actual:   False
 ✖️ Skipped_Test
 ✔️ Timeout_Test
-```</p></details>
+```
+
+</p>
+</details>

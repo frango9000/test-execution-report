@@ -3,14 +3,22 @@
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |6|1✔️|4❌️|1✖️|4s|
+
 <details><summary>Open Suits Details</summary>
 <p>
+
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[test/main_test.dart](#r0s0)|1✔️|3❌️||74ms|
-|[test/second_test.dart](#r0s1)||1❌️|1✖️|51ms|</p></details>
+|[test/main_test.dart](#r0s0)|1✔️|3❌️|-|74ms|
+|[test/second_test.dart](#r0s1)|-|1❌️|1✖️|51ms|
+
+</p>
+</details>
+
+
 <details><summary>Open Tests Detail</summary>
 <p>
+
 #### ❌️ <a id='user-content-r0s0' href='#r0s0'>test/main_test.dart</a>
 ```
 Test 1
@@ -31,4 +39,7 @@ Test 2
 ❌️ Timeout test
 	TimeoutException after 0:00:00.000001: Test timed out after 0 seconds.
 ✖️ Skipped test
-```</p></details>
+```
+
+</p>
+</details>
