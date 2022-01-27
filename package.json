@@ -1,6 +1,6 @@
 {
-  "name": "test-check",
-  "version": "0.0.0",
+  "name": "test-execution-report",
+  "version": "0.0.1",
   "private": true,
   "description": "Presents test results from popular testing frameworks as Github check run",
   "main": "lib/main.js",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dorny/test-check.git"
+    "url": "git+https://github.com/frango9000/test-execution-report.git"
   },
   "keywords": [
     "actions",
@@ -29,6 +29,12 @@
   ],
   "author": "Michal Dorner <dorner.michal@gmail.com>",
   "license": "MIT",
+  "contributors": [
+    {
+      "name": "Francisco Sanchez",
+      "url": "https://github.com/frango9000"
+    }
+  ],
   "dependencies": {
     "@actions/core": "^1.2.6",
     "@actions/exec": "^1.0.4",
