@@ -6,6 +6,7 @@ import {EventPayloads} from '@octokit/webhooks'
 import * as stream from 'stream'
 import {promisify} from 'util'
 import got from 'got'
+
 const asyncStream = promisify(stream.pipeline)
 
 export function getCheckRunContext(): {sha: string; runId: number} {
@@ -127,4 +128,84 @@ async function listGitTree(octokit: InstanceType<typeof GitHub>, sha: string, pa
   }
 
   return result
+}
+
+export async function postPullRequestComment(
+  octokit: InstanceType<typeof GitHub>,
+  name: string,
+  message: string
+): Promise<void> {
+  if (github.context.payload?.pull_request?.number) {
+    let response
+    const previousComments = await listPreviousComments()
+
+    if (!previousComments.length) {
+      core.debug(`No previous comments found, creating a new one...`)
+      response = await octokit.issues.createComment({
+        ...github.context.repo,
+        issue_number: octokit.payload.pull_request.number,
+        body: getHeader() + message + getFooter()
+      })
+    } else {
+      core.debug(`Previous comment found, updating...`)
+      response = await octokit.rest.issues.updateComment({
+        ...github.context.repo,
+        comment_id: previousComments[0].id,
+        body: getHeader() + message + getFooter()
+      })
+    }
+
+    if (previousComments.length > 1) {
+      const surplusComments = previousComments.slice(1)
+      if (surplusComments.length) core.debug(`Removing surplus comments. (${surplusComments.length}`)
+      for (const comment of surplusComments) {
+        await octokit.rest.issues.deleteComment({
+          ...github.context.repo,
+          comment_id: comment.id
+        })
+      }
+    }
+    if (response) {
+      core.debug(`Post message status: ${response.status}`)
+      core.debug(`Issue URL: ${response.data.issue_url}`)
+      core.debug(`Comment URL: ${response.data.url}`)
+      core.debug(`Comment HTML: ${response.data.html_url}`)
+    }
+  }
+
+  async function listPreviousComments(): Promise<IssueComment[]> {
+    const per_page = 20
+    let results: IssueComment[] = []
+    let page = 1
+    let response
+    if (github.context.payload.pull_request?.number) {
+      do {
+        response = await octokit.issues.listComments({
+          ...github.context.repo,
+          issue_number: github.context.payload.pull_request?.number,
+          page,
+          per_page
+        })
+        results = [...results, ...response.data]
+        page++
+      } while (response.data.length === per_page)
+    }
+    return results.filter(comment => comment.body?.includes(getHeader()))
+  }
+
+  function getHeader(): string {
+    return `<p data-id='${github.context?.payload?.pull_request?.id}'>${name}</p>`
+  }
+
+  function getFooter(): string {
+    return `<p>Last Update @ ${new Date().toUTCString()}</p>`
+  }
+
+  interface IssueComment {
+    id: number
+    body?: string
+    html_url: string
+    issue_url?: string
+    url: string
+  }
 }

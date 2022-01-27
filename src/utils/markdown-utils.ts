@@ -8,7 +8,7 @@ export enum Align {
 export const Icon = {
   skip: '✖️', // ':heavy_multiplication_x:'
   success: '✔️', // ':heavy_check_mark:'
-  fail: '❌' // ':x:'
+  fail: '❌️' // ':x:'
 }
 
 export function link(title: string, address: string): string {
@@ -16,6 +16,7 @@ export function link(title: string, address: string): string {
 }
 
 type ToString = string | number | boolean | Date
+
 export function table(headers: ToString[], align: ToString[], ...rows: ToString[][]): string {
   const headerRow = `|${headers.map(tableEscape).join('|')}|`
   const alignRow = `|${align.join('|')}|`

@@ -17,7 +17,7 @@ import {JestJunitParser} from './parsers/jest-junit/jest-junit-parser'
 import {MochaJsonParser} from './parsers/mocha-json/mocha-json-parser'
 
 import {normalizeDirPath, normalizeFilePath} from './utils/path-utils'
-import {getCheckRunContext} from './utils/github-utils'
+import {getCheckRunContext, postPullRequestComment} from './utils/github-utils'
 import {Icon} from './utils/markdown-utils'
 
 async function main(): Promise<void> {
@@ -169,6 +169,11 @@ class TestReporter {
     const {listSuites, listTests, onlySummary} = this
     const baseUrl = createResp.data.html_url
     const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary})
+
+    if (github.context?.eventName === 'pull_request') {
+      core.info('Posting PR comment')
+      await postPullRequestComment(this.octokit, this.name, summary)
+    }
 
     core.info('Creating annotations')
     const annotations = getAnnotations(results, this.maxAnnotations)

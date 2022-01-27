@@ -161,18 +161,32 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
   return sections
 }
 
+function collapsable(title: string, content: string): string {
+  return `<details><summary>${title}</summary>\n<p>\n${content}</p></details>`
+}
+
 function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOptions): string[] {
   const sections: string[] = []
 
   const trSlug = makeRunSlug(runIndex)
-  const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`
+  const nameLink = `<a id='${trSlug.id}' href='${options.baseUrl + trSlug.link}'>${tr.path}</a>`
   const icon = getResultIcon(tr.result)
   sections.push(`## ${icon}\xa0${nameLink}`)
 
   const time = formatTime(tr.time)
   const headingLine2 =
     tr.tests > 0
-      ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
+      ? table(
+          ['Total', 'Passed', 'Failed', 'Skipped', 'Time'],
+          [Align.Right, Align.Right, Align.Right, Align.Right, Align.Right],
+          [
+            tr.passed + tr.failed + tr.skipped,
+            tr.passed > 0 ? `${tr.passed}${Icon.success}` : '',
+            tr.failed > 0 ? `${tr.failed}${Icon.fail}` : '',
+            tr.skipped > 0 ? `${tr.skipped}${Icon.skip}` : '',
+            time
+          ]
+        )
       : 'No tests found'
   sections.push(headingLine2)
 
@@ -193,14 +207,14 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         return [tsNameLink, passed, failed, skipped, tsTime]
       })
     )
-    sections.push(suitesTable)
+    sections.push(collapsable('Open Suits Details', suitesTable))
   }
 
   if (options.listTests !== 'none') {
     const tests = suites.map((ts, suiteIndex) => getTestsReport(ts, runIndex, suiteIndex, options)).flat()
 
     if (tests.length > 1) {
-      sections.push(...tests)
+      sections.push(collapsable('Open Tests Detail', tests.join('\n')))
     }
   }
 
@@ -220,9 +234,9 @@ function getTestsReport(ts: TestSuiteResult, runIndex: number, suiteIndex: numbe
 
   const tsName = ts.name
   const tsSlug = makeSuiteSlug(runIndex, suiteIndex)
-  const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`
+  const tsNameLink = `<a id='${tsSlug.id}' href='${options.baseUrl + tsSlug.link}'>${tsName}</a>`
   const icon = getResultIcon(ts.result)
-  sections.push(`### ${icon}\xa0${tsNameLink}`)
+  sections.push(`#### ${icon}\xa0${tsNameLink}`)
 
   sections.push('```')
   for (const grp of groups) {

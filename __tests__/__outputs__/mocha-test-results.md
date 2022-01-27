@@ -1,6 +1,10 @@
 ![Tests passed successfully](https://img.shields.io/badge/tests-833%20passed%2C%206%20skipped-success)
-## ✔️ <a id="user-content-r0" href="#r0">fixtures/external/mocha/mocha-test-results.json</a>
-**839** tests were completed in **6s** with **833** passed, **0** failed and **6** skipped.
+## ✔️ <a id='user-content-r0' href='#r0'>fixtures/external/mocha/mocha-test-results.json</a>
+|Total|Passed|Failed|Skipped|Time|
+|---:|---:|---:|---:|---:|
+|839|833✔️||6✖️|6s|
+<details><summary>Open Suits Details</summary>
+<p>
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
 |test/node-unit/buffered-worker-pool.spec.js|14✔️|||8ms|
@@ -38,4 +42,4 @@
 |test/unit/test.spec.js|15✔️|||0ms|
 |test/unit/throw.spec.js|9✔️|||9ms|
 |test/unit/timeout.spec.js|8✔️|||109ms|
-|test/unit/utils.spec.js|75✔️|||24ms|
+|test/unit/utils.spec.js|75✔️|||24ms|</p></details>
