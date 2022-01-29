@@ -1987,10 +1987,10 @@ async function postPullRequestComment(octokit, name, message) {
     }
     function getHeader() {
         var _a, _b, _c;
-        return `<p data-id='${(_c = (_b = (_a = github.context) === null || _a === void 0 ? void 0 : _a.payload) === null || _b === void 0 ? void 0 : _b.pull_request) === null || _c === void 0 ? void 0 : _c.id}'>${name}</p>\n\n`;
+        return `\n<p data-id='${(_c = (_b = (_a = github.context) === null || _a === void 0 ? void 0 : _a.payload) === null || _b === void 0 ? void 0 : _b.pull_request) === null || _c === void 0 ? void 0 : _c.id}' data-name='${name}'></p>\n\n`;
     }
     function getFooter() {
-        return `\n\n<p>Last Update @ ${new Date().toUTCString()}</p>\n\n`;
+        return `\n<p>Last Update @ ${new Date().toUTCString()}</p>\n`;
     }
 }
 exports.postPullRequestComment = postPullRequestComment;

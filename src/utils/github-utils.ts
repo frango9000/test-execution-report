@@ -193,11 +193,11 @@ export async function postPullRequestComment(
   }
 
   function getHeader(): string {
-    return `<p data-id='${github.context?.payload?.pull_request?.id}'>${name}</p>\n\n`
+    return `\n<p data-id='${github.context?.payload?.pull_request?.id}' data-name='${name}'></p>\n\n`
   }
 
   function getFooter(): string {
-    return `\n\n<p>Last Update @ ${new Date().toUTCString()}</p>\n\n`
+    return `\n<p>Last Update @ ${new Date().toUTCString()}</p>\n`
   }
 
   interface IssueComment {
