@@ -1,10 +1,14 @@
 ![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%204%20failed%2C%201%20skipped-critical)
+
+<details><summary>Open Details</summary>
+<p>
+
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/jest-junit.xml</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |6|1✔️|4❌️|1✖️|1s|
 
-<details><summary>Open Suits Details</summary>
+<details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
@@ -38,6 +42,10 @@ Test 2
 	: Timeout - Async callback was not invoked within the 1 ms timeout specified by jest.setTimeout.Timeout - Async callback was not invoked within the 1 ms timeout specified by jest.setTimeout.Error:
 ✖️ Skipped test
 ```
+
+</p>
+</details>
+
 
 </p>
 </details>

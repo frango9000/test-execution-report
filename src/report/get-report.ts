@@ -154,9 +154,9 @@ function getTestRunsReport(testRuns: TestRunResult[], options: ReportOptions): s
     sections.push(resultsTable)
   }
 
-  if (options.onlySummary === false) {
+  if (!options.onlySummary) {
     const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat()
-    sections.push(...suitesReports)
+    sections.push(collapsable('Open Details', suitesReports.join('\n')))
   }
   return sections
 }
@@ -207,7 +207,7 @@ function getSuitesReport(tr: TestRunResult, runIndex: number, options: ReportOpt
         return [tsNameLink, passed, failed, skipped, tsTime]
       })
     )
-    sections.push(collapsable('Open Suits Details', suitesTable))
+    sections.push(collapsable('Open Suit Details', suitesTable))
   }
 
   if (options.listTests !== 'none') {

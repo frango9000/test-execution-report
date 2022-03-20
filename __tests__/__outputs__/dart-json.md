@@ -1,10 +1,14 @@
 ![Tests failed](https://img.shields.io/badge/tests-1%20passed%2C%204%20failed%2C%201%20skipped-critical)
+
+<details><summary>Open Details</summary>
+<p>
+
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/dart-json.json</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |6|1✔️|4❌️|1✖️|4s|
 
-<details><summary>Open Suits Details</summary>
+<details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
@@ -40,6 +44,10 @@ Test 2
 	TimeoutException after 0:00:00.000001: Test timed out after 0 seconds.
 ✖️ Skipped test
 ```
+
+</p>
+</details>
+
 
 </p>
 </details>

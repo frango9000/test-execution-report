@@ -1,10 +1,14 @@
 ![Tests failed](https://img.shields.io/badge/tests-268%20passed%2C%201%20failed-critical)
+
+<details><summary>Open Details</summary>
+<p>
+
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/external/flutter/provider-test-results.json</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |269|268✔️|1❌️|-|0ms|
 
-<details><summary>Open Suits Details</summary>
+<details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
@@ -386,6 +390,10 @@ valueListenableProvider
 	Unexpected number of calls
 	
 ```
+
+</p>
+</details>
+
 
 </p>
 </details>

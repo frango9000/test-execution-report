@@ -1,10 +1,14 @@
 ![Tests passed successfully](https://img.shields.io/badge/tests-803%20passed%2C%201%20skipped-success)
+
+<details><summary>Open Details</summary>
+<p>
+
 ## ✔️ <a id='user-content-r0' href='#r0'>fixtures/external/FluentValidation.Tests.trx</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |804|803✔️|-|1✖️|4s|
 
-<details><summary>Open Suits Details</summary>
+<details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
@@ -1069,6 +1073,10 @@
 ✔️ Unexpected_severity_check
 ✔️ Unexpected_state_check
 ```
+
+</p>
+</details>
+
 
 </p>
 </details>

@@ -1,10 +1,14 @@
 ![Tests failed](https://img.shields.io/badge/tests-1%20failed%2C%201%20skipped-critical)
+
+<details><summary>Open Details</summary>
+<p>
+
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/external/java/TEST-org.apache.pulsar.AddMissingPatchVersionTest.xml</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |2|-|1❌️|1✖️|116ms|
 
-<details><summary>Open Suits Details</summary>
+<details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
@@ -24,6 +28,10 @@
 ❌️ testVersionStrings
 	java.lang.AssertionError: expected [1.2.1] but found [1.2.0]
 ```
+
+</p>
+</details>
+
 
 </p>
 </details>

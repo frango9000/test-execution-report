@@ -193,7 +193,9 @@ export async function postPullRequestComment(
   }
 
   function getHeader(): string {
-    return `\n<p data-id='${github.context?.payload?.pull_request?.id}' data-name='${name}'></p>\n\n`
+    return `\n<p data-id='${github.context?.payload?.pull_request?.id}' data-name='${name || 'data-name'}'>${
+      name || ''
+    }</p>\n\n`
   }
 
   function getFooter(): string {

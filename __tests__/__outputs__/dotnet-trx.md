@@ -1,10 +1,14 @@
 ![Tests failed](https://img.shields.io/badge/tests-5%20passed%2C%205%20failed%2C%201%20skipped-critical)
+
+<details><summary>Open Details</summary>
+<p>
+
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/dotnet-trx.trx</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |11|5✔️|5❌️|1✖️|1s|
 
-<details><summary>Open Suits Details</summary>
+<details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
@@ -43,6 +47,10 @@
 ✖️ Skipped_Test
 ✔️ Timeout_Test
 ```
+
+</p>
+</details>
+
 
 </p>
 </details>

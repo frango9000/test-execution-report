@@ -1473,9 +1473,9 @@ function getTestRunsReport(testRuns, options) {
         const resultsTable = markdown_utils_1.table(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
         sections.push(resultsTable);
     }
-    if (options.onlySummary === false) {
+    if (!options.onlySummary) {
         const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
-        sections.push(...suitesReports);
+        sections.push(collapsable('Open Details', suitesReports.join('\n')));
     }
     return sections;
 }
@@ -1512,7 +1512,7 @@ function getSuitesReport(tr, runIndex, options) {
             const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '-';
             return [tsNameLink, passed, failed, skipped, tsTime];
         }));
-        sections.push(collapsable('Open Suits Details', suitesTable));
+        sections.push(collapsable('Open Suit Details', suitesTable));
     }
     if (options.listTests !== 'none') {
         const tests = suites.map((ts, suiteIndex) => getTestsReport(ts, runIndex, suiteIndex, options)).flat();
@@ -1987,7 +1987,7 @@ async function postPullRequestComment(octokit, name, message) {
     }
     function getHeader() {
         var _a, _b, _c;
-        return `\n<p data-id='${(_c = (_b = (_a = github.context) === null || _a === void 0 ? void 0 : _a.payload) === null || _b === void 0 ? void 0 : _b.pull_request) === null || _c === void 0 ? void 0 : _c.id}' data-name='${name}'></p>\n\n`;
+        return `\n<p data-id='${(_c = (_b = (_a = github.context) === null || _a === void 0 ? void 0 : _a.payload) === null || _b === void 0 ? void 0 : _b.pull_request) === null || _c === void 0 ? void 0 : _c.id}' data-name='${name || 'data-name'}'>${name || ''}</p>\n\n`;
     }
     function getFooter() {
         return `\n<p>Last Update @ ${new Date().toUTCString()}</p>\n`;

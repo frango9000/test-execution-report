@@ -1,10 +1,14 @@
 ![Tests passed successfully](https://img.shields.io/badge/tests-67%20passed%2C%2012%20skipped-success)
+
+<details><summary>Open Details</summary>
+<p>
+
 ## ✔️ <a id='user-content-r0' href='#r0'>fixtures/external/SilentNotes.trx</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |79|67✔️|-|12✖️|1s|
 
-<details><summary>Open Suits Details</summary>
+<details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
@@ -148,6 +152,10 @@
 ✔️ SerializedXmlDoesNotContainNullProperties
 ✔️ SerializedXmlDoesNotContainPlaintextData
 ```
+
+</p>
+</details>
+
 
 </p>
 </details>

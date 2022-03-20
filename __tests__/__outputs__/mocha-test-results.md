@@ -1,10 +1,14 @@
 ![Tests passed successfully](https://img.shields.io/badge/tests-833%20passed%2C%206%20skipped-success)
+
+<details><summary>Open Details</summary>
+<p>
+
 ## ✔️ <a id='user-content-r0' href='#r0'>fixtures/external/mocha/mocha-test-results.json</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |839|833✔️|-|6✖️|6s|
 
-<details><summary>Open Suits Details</summary>
+<details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
@@ -45,6 +49,10 @@
 |test/unit/throw.spec.js|9✔️|-|-|9ms|
 |test/unit/timeout.spec.js|8✔️|-|-|109ms|
 |test/unit/utils.spec.js|75✔️|-|-|24ms|
+
+</p>
+</details>
+
 
 </p>
 </details>

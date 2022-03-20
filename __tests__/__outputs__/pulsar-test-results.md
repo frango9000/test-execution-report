@@ -1,10 +1,14 @@
 ![Tests failed](https://img.shields.io/badge/tests-793%20passed%2C%201%20failed%2C%2014%20skipped-critical)
+
+<details><summary>Open Details</summary>
+<p>
+
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/external/java/pulsar-test-report.xml</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |808|793✔️|1❌️|14✖️|2127s|
 
-<details><summary>Open Suits Details</summary>
+<details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
@@ -1530,6 +1534,10 @@
 ✔️ statsTest
 ✔️ unauthenticatedSocketTest
 ```
+
+</p>
+</details>
+
 
 </p>
 </details>

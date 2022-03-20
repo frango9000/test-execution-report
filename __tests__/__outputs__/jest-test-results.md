@@ -1,10 +1,14 @@
 ![Tests failed](https://img.shields.io/badge/tests-4207%20passed%2C%202%20failed%2C%2030%20skipped-critical)
+
+<details><summary>Open Details</summary>
+<p>
+
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/external/jest/jest-test-results.xml</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
 |4239|4207✔️|2❌️|30✖️|166s|
 
-<details><summary>Open Suits Details</summary>
+<details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
@@ -444,6 +448,10 @@
 	Error: expect(received).toMatch(expected)
 ✔️ path on Windows is case-insensitive
 ```
+
+</p>
+</details>
+
 
 </p>
 </details>
