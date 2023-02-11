@@ -19,6 +19,14 @@ jobs:
       - run: npm run lint
       - run: npm test
 
+      - name: Create test report
+        uses: ./
+        if: success() || failure()
+        with:
+          name: JEST Tests
+          path: __tests__/__results__/*.xml
+          reporter: jest-junit
+
       - name: Upload test results
         if: success() || failure()
         uses: actions/upload-artifact@v3
