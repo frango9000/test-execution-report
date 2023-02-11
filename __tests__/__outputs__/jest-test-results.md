@@ -6,7 +6,7 @@
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/external/jest/jest-test-results.xml</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
-|4239|4207✔️|2❌️|30✖️|166s|
+|4239|4207✅|2❌️|30⚪|166s|
 
 <details><summary>Open Suit Details</summary>
 <p>
@@ -444,7 +444,7 @@
 ✅ do not pickup non-tested files when reporting coverage on only changed files
 ✅ collect test coverage when using onlyChanged
 ✅ onlyChanged in config is overwritten by --all or testPathPattern
-❌ gets changed files for hg
+❌️ gets changed files for hg
 	Error: expect(received).toMatch(expected)
 ✅ path on Windows is case-insensitive
 ```

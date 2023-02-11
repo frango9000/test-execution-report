@@ -6,15 +6,15 @@
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/jest-junit.xml</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
-|6|1✔️|4❌️|1✖️|1s|
+|6|1✅|4❌️|1⚪|8s|
 
 <details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[__tests__\main.test.js](#r0s0)|1✅|3❌️|-|486ms|
-|[__tests__\second.test.js](#r0s1)|-|1❌️|1⚪|82ms|
+|[__tests__\main.test.js](#r0s0)|1✅|3❌️|-|2s|
+|[__tests__\second.test.js](#r0s1)|-|1❌️|1⚪|2s|
 
 </p>
 </details>

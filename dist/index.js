@@ -371,6 +371,7 @@ class TestReporter {
         });
     }
     createReport(parser, name, files) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             if (files.length === 0) {
                 core.warning(`No file matches path ${this.path}`);
@@ -397,6 +398,10 @@ class TestReporter {
             const { listSuites, listTests, onlySummary } = this;
             const baseUrl = createResp.data.html_url;
             const summary = (0, get_report_1.getReport)(results, { listSuites, listTests, baseUrl, onlySummary });
+            if (((_a = github.context) === null || _a === void 0 ? void 0 : _a.eventName) === 'pull_request') {
+                core.info('Posting PR comment');
+                yield (0, github_utils_1.postPullRequestComment)(this.octokit, this.name, summary);
+            }
             core.info('Creating annotations');
             const annotations = (0, get_annotations_1.getAnnotations)(results, this.maxAnnotations);
             const isFailed = this.failOnError && results.some(tr => tr.result === 'failed');
@@ -1626,29 +1631,38 @@ function getTestRunsReport(testRuns, options) {
             const name = tr.path;
             const addr = options.baseUrl + makeRunSlug(runIndex).link;
             const nameLink = (0, markdown_utils_1.link)(name, addr);
-            const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '';
-            const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '';
-            const skipped = tr.skipped > 0 ? `${tr.skipped}${markdown_utils_1.Icon.skip}` : '';
+            const passed = tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '-';
+            const failed = tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '-';
+            const skipped = tr.skipped > 0 ? `${tr.skipped}${markdown_utils_1.Icon.skip}` : '-';
             return [nameLink, passed, failed, skipped, time];
         });
         const resultsTable = (0, markdown_utils_1.table)(['Report', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Left, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], ...tableData);
         sections.push(resultsTable);
     }
-    if (options.onlySummary === false) {
+    if (!options.onlySummary) {
         const suitesReports = testRuns.map((tr, i) => getSuitesReport(tr, i, options)).flat();
-        sections.push(...suitesReports);
+        sections.push(collapsable('Open Details', suitesReports.join('\n')));
     }
     return sections;
+}
+function collapsable(title, content) {
+    return `\n<details><summary>${title}</summary>\n<p>\n\n${content}\n\n</p>\n</details>\n`;
 }
 function getSuitesReport(tr, runIndex, options) {
     const sections = [];
     const trSlug = makeRunSlug(runIndex);
-    const nameLink = `<a id="${trSlug.id}" href="${options.baseUrl + trSlug.link}">${tr.path}</a>`;
+    const nameLink = `<a id='${trSlug.id}' href='${options.baseUrl + trSlug.link}'>${tr.path}</a>`;
     const icon = getResultIcon(tr.result);
     sections.push(`## ${icon}\xa0${nameLink}`);
     const time = (0, markdown_utils_1.formatTime)(tr.time);
     const headingLine2 = tr.tests > 0
-        ? `**${tr.tests}** tests were completed in **${time}** with **${tr.passed}** passed, **${tr.failed}** failed and **${tr.skipped}** skipped.`
+        ? (0, markdown_utils_1.table)(['Total', 'Passed', 'Failed', 'Skipped', 'Time'], [markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right, markdown_utils_1.Align.Right], [
+            tr.passed + tr.failed + tr.skipped,
+            tr.passed > 0 ? `${tr.passed}${markdown_utils_1.Icon.success}` : '-',
+            tr.failed > 0 ? `${tr.failed}${markdown_utils_1.Icon.fail}` : '-',
+            tr.skipped > 0 ? `${tr.skipped}${markdown_utils_1.Icon.skip}` : '-',
+            time
+        ])
         : 'No tests found';
     sections.push(headingLine2);
     const suites = options.listSuites === 'failed' ? tr.failedSuites : tr.suites;
@@ -1659,17 +1673,17 @@ function getSuitesReport(tr, runIndex, options) {
             const skipLink = options.listTests === 'none' || (options.listTests === 'failed' && s.result !== 'failed');
             const tsAddr = options.baseUrl + makeSuiteSlug(runIndex, suiteIndex).link;
             const tsNameLink = skipLink ? tsName : (0, markdown_utils_1.link)(tsName, tsAddr);
-            const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '';
-            const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '';
-            const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '';
+            const passed = s.passed > 0 ? `${s.passed}${markdown_utils_1.Icon.success}` : '-';
+            const failed = s.failed > 0 ? `${s.failed}${markdown_utils_1.Icon.fail}` : '-';
+            const skipped = s.skipped > 0 ? `${s.skipped}${markdown_utils_1.Icon.skip}` : '-';
             return [tsNameLink, passed, failed, skipped, tsTime];
         }));
-        sections.push(suitesTable);
+        sections.push(collapsable('Open Suit Details', suitesTable));
     }
     if (options.listTests !== 'none') {
         const tests = suites.map((ts, suiteIndex) => getTestsReport(ts, runIndex, suiteIndex, options)).flat();
         if (tests.length > 1) {
-            sections.push(...tests);
+            sections.push(collapsable('Open Tests Detail', tests.join('\n')));
         }
     }
     return sections;
@@ -1686,9 +1700,9 @@ function getTestsReport(ts, runIndex, suiteIndex, options) {
     const sections = [];
     const tsName = ts.name;
     const tsSlug = makeSuiteSlug(runIndex, suiteIndex);
-    const tsNameLink = `<a id="${tsSlug.id}" href="${options.baseUrl + tsSlug.link}">${tsName}</a>`;
+    const tsNameLink = `<a id='${tsSlug.id}' href='${options.baseUrl + tsSlug.link}'>${tsName}</a>`;
     const icon = getResultIcon(ts.result);
-    sections.push(`### ${icon}\xa0${tsNameLink}`);
+    sections.push(`#### ${icon}\xa0${tsNameLink}`);
     sections.push('```');
     for (const grp of groups) {
         if (grp.name) {
@@ -1965,7 +1979,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-exports.listFiles = exports.downloadArtifact = exports.getCheckRunContext = void 0;
+exports.postPullRequestComment = exports.listFiles = exports.downloadArtifact = exports.getCheckRunContext = void 0;
 const fs_1 = __nccwpck_require__(7147);
 const core = __importStar(__nccwpck_require__(2186));
 const github = __importStar(__nccwpck_require__(5438));
@@ -2072,6 +2086,62 @@ function listGitTree(octokit, sha, path) {
         return result;
     });
 }
+function postPullRequestComment(octokit, name, message) {
+    var _a, _b;
+    return __awaiter(this, void 0, void 0, function* () {
+        if ((_b = (_a = github.context.payload) === null || _a === void 0 ? void 0 : _a.pull_request) === null || _b === void 0 ? void 0 : _b.number) {
+            let response;
+            const previousComments = yield listPreviousComments();
+            if (!previousComments.length) {
+                core.debug(`No previous comments found, creating a new one...`);
+                response = yield octokit.rest.issues.createComment(Object.assign(Object.assign({}, github.context.repo), { issue_number: github.context.payload.pull_request.number, body: getHeader() + message + getFooter() }));
+            }
+            else {
+                core.debug(`Previous comment found, updating...`);
+                response = yield octokit.rest.issues.updateComment(Object.assign(Object.assign({}, github.context.repo), { comment_id: previousComments[0].id, body: getHeader() + message + getFooter() }));
+            }
+            if (previousComments.length > 1) {
+                const surplusComments = previousComments.slice(1);
+                if (surplusComments.length)
+                    core.debug(`Removing surplus comments. (${surplusComments.length}`);
+                for (const comment of surplusComments) {
+                    yield octokit.rest.issues.deleteComment(Object.assign(Object.assign({}, github.context.repo), { comment_id: comment.id }));
+                }
+            }
+            if (response) {
+                core.debug(`Post message status: ${response.status}`);
+                core.debug(`Comment URL: ${response.data.url}`);
+                core.debug(`Comment HTML: ${response.data.html_url}`);
+            }
+        }
+        function listPreviousComments() {
+            var _a, _b;
+            return __awaiter(this, void 0, void 0, function* () {
+                const per_page = 20;
+                let results = [];
+                let page = 1;
+                let response;
+                if ((_a = github.context.payload.pull_request) === null || _a === void 0 ? void 0 : _a.number) {
+                    do {
+                        response = yield octokit.rest.issues.listComments(Object.assign(Object.assign({}, github.context.repo), { issue_number: (_b = github.context.payload.pull_request) === null || _b === void 0 ? void 0 : _b.number, page,
+                            per_page }));
+                        results = [...results, ...response.data];
+                        page++;
+                    } while (response.data.length === per_page);
+                }
+                return results.filter(comment => { var _a; return (_a = comment.body) === null || _a === void 0 ? void 0 : _a.includes(getHeader()); });
+            });
+        }
+        function getHeader() {
+            var _a, _b, _c;
+            return `\n<p data-id='${(_c = (_b = (_a = github.context) === null || _a === void 0 ? void 0 : _a.payload) === null || _b === void 0 ? void 0 : _b.pull_request) === null || _c === void 0 ? void 0 : _c.id}' data-name='${name || 'data-name'}'>${name || ''}</p>\n\n`;
+        }
+        function getFooter() {
+            return `\n<p>Last Update @ ${new Date().toUTCString()}</p>\n`;
+        }
+    });
+}
+exports.postPullRequestComment = postPullRequestComment;
 
 
 /***/ }),
@@ -2093,7 +2163,7 @@ var Align;
 exports.Icon = {
     skip: '⚪',
     success: '✅',
-    fail: '❌' // ':x:'
+    fail: '❌️' // ':x:'
 };
 function link(title, address) {
     return `[${title}](${address})`;

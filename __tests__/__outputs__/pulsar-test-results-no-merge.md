@@ -6,7 +6,7 @@
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/external/java/TEST-org.apache.pulsar.AddMissingPatchVersionTest.xml</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
-|2|-|1❌️|1✖️|116ms|
+|2|-|1❌️|1⚪|116ms|
 
 <details><summary>Open Suit Details</summary>
 <p>

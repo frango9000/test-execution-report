@@ -6,7 +6,7 @@
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/mocha-json.json</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
-|6|1✔️|4❌️|1✖️|12ms|
+|6|1✅|4❌️|1⚪|12ms|
 
 <details><summary>Open Suit Details</summary>
 <p>
