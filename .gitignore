@@ -101,5 +101,4 @@ lib/**/*
 # Project specific
 __tests__/__results__
 
-
 .idea

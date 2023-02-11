@@ -6,15 +6,15 @@
 ## ❌️ <a id='user-content-r0' href='#r0'>fixtures/mocha-json.json</a>
 |Total|Passed|Failed|Skipped|Time|
 |---:|---:|---:|---:|---:|
-|6|1✔️|4❌️|1✖️|12ms|
+|6|1✅|4❌️|1⚪|12ms|
 
 <details><summary>Open Suit Details</summary>
 <p>
 
 |Test suite|Passed|Failed|Skipped|Time|
 |:---|---:|---:|---:|---:|
-|[test/main.test.js](#r0s0)|1✔️|3❌️|-|1ms|
-|[test/second.test.js](#r0s1)|-|1❌️|1✖️|8ms|
+|[test/main.test.js](#r0s0)|1✅|3❌️|-|1ms|
+|[test/second.test.js](#r0s1)|-|1❌️|1⚪|8ms|
 
 </p>
 </details>
@@ -26,7 +26,7 @@
 #### ❌️ <a id='user-content-r0s0' href='#r0s0'>test/main.test.js</a>
 ```
 Test 1
-  ✔️ Passing test
+  ✅ Passing test
 Test 1 Test 1.1
   ❌️ Exception in target unit
 	Some error
@@ -41,7 +41,7 @@ Test 2
 ```
 #### ❌️ <a id='user-content-r0s1' href='#r0s1'>test/second.test.js</a>
 ```
-✖️ Skipped test
+⚪ Skipped test
 ❌️ Timeout test
 	Timeout of 1ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (C:\Users\Michal\Workspace\dorny\test-reporter\reports\mocha\test\second.test.js)
 ```

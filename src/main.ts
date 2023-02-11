@@ -25,7 +25,8 @@ async function main(): Promise<void> {
     const testReporter = new TestReporter()
     await testReporter.run()
   } catch (error) {
-    core.setFailed(error.message)
+    if (error instanceof Error) core.setFailed(error)
+    else core.setFailed(JSON.stringify(error))
   }
 }
 
@@ -90,10 +91,10 @@ class TestReporter {
       : new LocalFileProvider(this.name, pattern)
 
     const parseErrors = this.maxAnnotations > 0
-    const trackedFiles = await inputProvider.listTrackedFiles()
+    const trackedFiles = parseErrors ? await inputProvider.listTrackedFiles() : []
     const workDir = this.artifact ? undefined : normalizeDirPath(process.cwd(), true)
 
-    core.info(`Found ${trackedFiles.length} files tracked by GitHub`)
+    if (parseErrors) core.info(`Found ${trackedFiles.length} files tracked by GitHub`)
 
     const options: ParseOptions = {
       workDir,
@@ -146,15 +147,20 @@ class TestReporter {
       return []
     }
 
+    core.info(`Processing test results for check run ${name}`)
     const results: TestRunResult[] = []
     for (const {file, content} of files) {
-      core.info(`Processing test results from ${file}`)
-      const tr = await parser.parse(file, content)
-      results.push(tr)
+      try {
+        const tr = await parser.parse(file, content)
+        results.push(tr)
+      } catch (error) {
+        core.error(`Processing test results from ${file} failed`)
+        throw error
+      }
     }
 
     core.info(`Creating check run ${name}`)
-    const createResp = await this.octokit.checks.create({
+    const createResp = await this.octokit.rest.checks.create({
       head_sha: this.context.sha,
       name,
       status: 'in_progress',
@@ -167,7 +173,7 @@ class TestReporter {
 
     core.info('Creating report summary')
     const {listSuites, listTests, onlySummary} = this
-    const baseUrl = createResp.data.html_url
+    const baseUrl = createResp.data.html_url as string
     const summary = getReport(results, {listSuites, listTests, baseUrl, onlySummary})
 
     if (github.context?.eventName === 'pull_request') {
@@ -178,12 +184,12 @@ class TestReporter {
     core.info('Creating annotations')
     const annotations = getAnnotations(results, this.maxAnnotations)
 
-    const isFailed = results.some(tr => tr.result === 'failed')
+    const isFailed = this.failOnError && results.some(tr => tr.result === 'failed')
     const conclusion = isFailed ? 'failure' : 'success'
     const icon = isFailed ? Icon.fail : Icon.success
 
     core.info(`Updating check run conclusion (${conclusion}) and output`)
-    const resp = await this.octokit.checks.update({
+    const resp = await this.octokit.rest.checks.update({
       check_run_id: createResp.data.id,
       conclusion,
       status: 'completed',

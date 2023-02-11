@@ -4,8 +4,6 @@ on:
     paths-ignore: [ '**.md' ]
   push:
     paths-ignore: [ '**.md' ]
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
@@ -13,19 +11,13 @@ jobs:
     name: Build & Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - run: node --version
       - run: npm ci
       - run: npm run build
       - run: npm run format-check
       - run: npm run lint
       - run: npm test
-
-      - name: Upload test results
-        if: success() || failure()
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-results
-          path: __tests__/__results__/*.xml
 
       - name: Create test report
         uses: ./
@@ -34,3 +26,10 @@ jobs:
           name: JEST Tests
           path: __tests__/__results__/*.xml
           reporter: jest-junit
+
+      - name: Upload test results
+        if: success() || failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: __tests__/__results__/*.xml
