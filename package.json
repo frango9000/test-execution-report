@@ -1,6 +1,6 @@
 {
   "name": "test-execution-report",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "Presents test results from popular testing frameworks as Github check run",
   "main": "lib/main.js",
